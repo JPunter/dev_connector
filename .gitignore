@@ -1,5 +1,5 @@
 # Custom ignores
-**/default.json
+config/default.json
 
 # Node default git ignore
 **/node_modules
