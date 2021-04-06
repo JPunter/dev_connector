@@ -69,7 +69,7 @@ export const getProfileById = (userId) => async (dispatch) => {
 		const res = await api.get(`/profile/user/${userId}`);
 
 		dispatch({
-			type: GET_PROFILES,
+			type: GET_PROFILE,
 			payload: res.data,
 		});
 	} catch (err) {
@@ -204,7 +204,7 @@ export const deleteEducation = (id) => async (dispatch) => {
 export const deleteAccount = (id) => async (dispatch) => {
 	if (window.confirm("Are you sure? This can NOT be undone!")) {
 		try {
-			const res = await api.delete(`/profile`);
+			await api.delete(`/profile`);
 
 			dispatch({ type: CLEAR_PROFILE });
 			dispatch({ type: ACCOUNT_DELETED });
