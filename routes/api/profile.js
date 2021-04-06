@@ -44,28 +44,23 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    // destructure the request
     const {
-      company,
       website,
-      location,
-      bio,
-      status,
-      githubusername,
       skills,
       youtube,
-      facebook,
       twitter,
       instagram,
       linkedin,
+      facebook,
+      // spread the rest of the fields we don't need to check
+      ...rest
     } = req.body;
 
     // Build profile object
     const profileFields = {
       user: req.user.id,
-      website:
-        website && website !== ""
-          ? normalize(website, { forceHttps: true })
-          : "",
+      website: website && website !== "" ? website : "",
       skills: Array.isArray(skills)
         ? skills
         : skills.split(",").map((skill) => " " + skill.trim()),
