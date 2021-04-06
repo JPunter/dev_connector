@@ -19,7 +19,6 @@ import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 
 import "./App.css";
-import AddExperience from "./components/profile-form/AddExperience";
 
 if (localStorage.token) {
 	setAuthToken(localStorage.token);
