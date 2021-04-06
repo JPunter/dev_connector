@@ -7,6 +7,7 @@ const Profile = require("../../models/Profile");
 const User = require("../../models/User");
 const Post = require("../../models/Post");
 const { reset } = require("nodemon");
+const normalize = require("normalize-url");
 
 // @route   GET api/profile/me
 // @desc    Get current users profile
@@ -61,20 +62,26 @@ router.post(
 		// Build profile object
 		const profileFields = {
 			user: req.user.id,
-			website: website && website !== "" ? website : "",
+			website:
+				website && website !== ""
+					? normalize(website, { forceHttps: true })
+					: "",
 			skills: Array.isArray(skills)
 				? skills
 				: skills.split(",").map((skill) => " " + skill.trim()),
 			...rest,
 		};
 
-		// Build social object
-		profileFields.social = {};
-		if (youtube) profileFields.social.youtube = youtube;
-		if (twitter) profileFields.social.twitter = twitter;
-		if (facebook) profileFields.social.facebook = facebook;
-		if (linkedin) profileFields.social.linkedin = linkedin;
-		if (instagram) profileFields.social.instagram = instagram;
+		// Build socialFields object
+		const socialFields = { youtube, twitter, instagram, linkedin, facebook };
+
+		// normalize social fields to ensure valid url
+		for (const [key, value] of Object.entries(socialFields)) {
+			if (value && value.length > 0)
+				socialFields[key] = normalize(value, { forceHttps: true });
+		}
+		// add to profileFields
+		profileFields.social = socialFields;
 
 		try {
 			let profile = await Profile.findOne({ user: req.user.id });
