@@ -1,4 +1,4 @@
 {
-    "mongoURI": "mongodb+srv://jpunter:VYQMTwGuaLo6w6MJ@mern-dev.x2tzl.mongodb.net/socialDB?retryWrites=true",
-    "jwtSecret": "G9ec9NNCpT76kJ"
+    "mongoURI": "--REDACTED--",
+    "jwtSecret": "--REDACTED--"
 }
